@@ -1,6 +1,6 @@
 using System;
 
-namespace TreeVariants
+namespace TagTree
 {
     public class Tree<T>
     {

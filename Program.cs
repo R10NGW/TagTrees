@@ -69,16 +69,25 @@ namespace TagTree
 
         public static string toTree(Dictionary<String, List<string>> inputDict, string root)
         {
-            //set root as head of tree
-            //branch from root to all tags inside of dict where key = root
-            //loop through each branch 
-            // Tree<Dictionary> tree = new Tree<Dictionary>();
-            Tree<Dictionary<String, List<string>>> = new Tree<Dictionary<String, List<string>>>();
+            Tree<string> tree = new Tree<string>();
+            tree.Root = new TreeNode<string>()
+            {
+                Data = root,
+                Parent = null
+
+            };
+            // foreach(KeyValuePair<string,List<string>> tag in inputDict.Where(inputDict.Key == root))
 
 
 
             
            return " tree of tags maybe in string form";
+        }
+
+            public static void giveChildren(Dictionary<String, List<string>> inputDict, Tree<string> parent)
+        {
+
+
         }
         
 
