@@ -26,7 +26,8 @@ namespace TagTree
         {
            string root = findRoot(inputString);
            Dictionary<String, List<string>> TagDict = findTagDict(inputString);
-           return root;
+           toTree(TagDict, root);
+           return " tree of tags to string";
         }
 
         public static string findRoot(string inputString)
@@ -66,9 +67,18 @@ namespace TagTree
             return TagDict;
         }
 
-        public static string Tree(string inputString)
+        public static string toTree(Dictionary<String, List<string>> inputDict, string root)
         {
-           return " ";
+            //set root as head of tree
+            //branch from root to all tags inside of dict where key = root
+            //loop through each branch 
+            // Tree<Dictionary> tree = new Tree<Dictionary>();
+            Tree<Dictionary<String, List<string>>> = new Tree<Dictionary<String, List<string>>>();
+
+
+
+            
+           return " tree of tags maybe in string form";
         }
         
 
@@ -85,3 +95,9 @@ namespace TagTree
 }
 
 
+// should i be using this keyword on my local variables?
+//should i hold all my methods here? or should i break some out into classes?
+//should all my methods be public static? 
+//should i create a folder in my git repo for this code? or is it fine next to the input and output and readme?
+
+// put main method at the bottom
