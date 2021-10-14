@@ -4,7 +4,7 @@ using System.Collections;
 using System.Linq;
 using System.Collections.Generic;
 
-namespace Tree
+namespace TagTree
 {
     class Program
     {
@@ -24,9 +24,9 @@ namespace Tree
 
         public static string sorter(string inputString)
         {
-            string root = findRoot(inputString);
-            String[] secondLevel = findSecondLevel(inputString);
-            return root;
+           string root = findRoot(inputString);
+           Dictionary<String, List<string>> TagDict = findTagDict(inputString);
+           return root;
         }
 
         public static string findRoot(string inputString)
@@ -49,10 +49,10 @@ namespace Tree
             return "no bottom tag was found";
         }
 
-        public static string[] findSecondLevel(string inputString)
+        public static Dictionary<String, List<string>> findTagDict(string inputString)
         {
             string[] tags = inputString.Split("\r\n", StringSplitOptions.RemoveEmptyEntries);
-            Dictionary<String, List<string>> secondLevel = new Dictionary<string, List<string>>();
+            Dictionary<String, List<string>> TagDict = new Dictionary<string, List<string>>();
             string[] delimiters = new string[] {" ", ","};
             foreach(string tag in tags)
             {
@@ -60,22 +60,27 @@ namespace Tree
                 {
                     string tempKey = tag.Substring(0,4);
                     string[] tempArray = tag.Substring(8).Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
-                    secondLevel.Add(tempKey,tempArray.ToList());
+                    TagDict.Add(tempKey,tempArray.ToList());
                 }
             }
-
-            foreach(KeyValuePair<string,List<string>> tag in secondLevel)
-            {
-                string tempString = "";
-                foreach(string value in tag.Value)
-                {
-                    tempString += (" " + value + " ");
-                }
-                Console.WriteLine(tag.Key + " test " + tempString );
-            }
-
-            return tags;
+            return TagDict;
         }
+
+        public static string Tree(string inputString)
+        {
+           return " ";
+        }
+        
+
+            // foreach(KeyValuePair<string,List<string>> tag in TagDict)
+            // {
+            //     string tempString = "";
+            //     foreach(string value in tag.Value)
+            //     {
+            //         tempString += (" " + value + " ");
+            //     }
+            //     Console.WriteLine(tag.Key + " test " + tempString );
+            // }
     }
 }
 
