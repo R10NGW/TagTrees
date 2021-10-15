@@ -11,7 +11,7 @@ namespace TagTree
 
         public static void printer(string finalString)   //prints to file and writes output in terminal 
         {
-            string outFile = @"C:\Users\Ryan\Desktop\C#\output.txt";
+            string outFile = @"./output.txt";
             File.WriteAllText(outFile, finalString);
             Console.Write(finalString);
         }
@@ -62,6 +62,8 @@ namespace TagTree
 
             tree.Children = getChildNodes(inputDict, tree);   //looks for children of our first node
 
+
+            
             return tree;
         }
 
@@ -119,7 +121,7 @@ namespace TagTree
 
         public static void Main(string[] args)  //main string in class
         {
-            string inFile = System.IO.File.ReadAllText(@"C:\Users\Ryan\Desktop\C#\input.txt");   //gets input
+            string inFile = System.IO.File.ReadAllText(@"./input.txt");   //gets input
             string root = findRoot(inFile);  //finds root
             Dictionary<String, List<string>> TagDict = findTagDict(inFile);  //finds dict of parents and children
             treeBuilder(TagDict, root);  //uses root and dict to create tree structure
@@ -128,12 +130,3 @@ namespace TagTree
 
     }
 }
-
-
-// do i need to be using this keyword on my local variables?
-//should i hold all my methods here? or should i break some out into classes?
-//should all my methods be public static? 
-//should my names be more distcint? 
-//should i create a folder in my git repo for this code? or is it fine next to the input and output and readme?
-//should line 36 be in a try catch
-//check comments on 96 and 82
