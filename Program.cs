@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.IO;
 using System.Linq;
 using System.Collections.Generic;
@@ -9,6 +10,16 @@ namespace TagTree
     {
         public static string treeString;   //class level string, used to print tree 
 
+        public static string getString()   //gets string from text file
+        {
+            string inFile = "";
+            List<string> lines = System.IO.File.ReadAllLines(@"./input.txt").ToList();
+            foreach (string line in lines)
+            {
+                inFile += line + "\r\n";
+            }
+            return inFile;
+        }
         public static void printer(string finalString)   //prints to file and writes output in terminal 
         {
             string outFile = @"./output.txt";
@@ -24,16 +35,23 @@ namespace TagTree
             foreach (string tag in rootTagArray)   //foreach tag in array add tag to dict if it already exists add 1 to value. Our root will be the only key with 1 occurance 
             {
                 if (rootTagResult.ContainsKey(tag))
-                    rootTagResult[tag] = rootTagResult[tag] + 1;
+                    rootTagResult[tag] += 1;
                 else
                     rootTagResult[tag] = 1;
             }
+            // foreach (var s in rootTagResult)
+            // {
+            // }
             foreach (var tagArray in rootTagResult)  //returns root
             {
                 if (tagArray.Value == 1)
+                {
                     return tagArray.Key;
+                }
             }
-            return "no bottom tag was found";  //if no root found return error 
+
+            Console.WriteLine("no root found");
+            return "";  //if no root found return error 
         }
 
         public static Dictionary<String, List<string>> findTagDict(string inputString)   //find dict of parent nodes with their children nodes, filters out nodes with no children
@@ -41,12 +59,12 @@ namespace TagTree
             string[] tags = inputString.Split("\r\n", StringSplitOptions.RemoveEmptyEntries);   //deliminates string into an array of strings on carriage return
             Dictionary<String, List<string>> TagDict = new Dictionary<string, List<string>>();
             string[] delimiters = new string[] { " ", "," };
-            foreach (string tag in tags)   //creates a dict of all strings in the array that are longer then 4 characers long
+            foreach (string tag in tags)   //creates a dict of all strings in the array contain an arrow, and then splits into parents and children
             {
-                if (tag.Length > 4)
+                if (tag.Contains("->"))
                 {
-                    string tempKey = tag.Substring(0, 4);
-                    string[] tempArray = tag.Substring(8).Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
+                    string tempKey = tag.Substring(0, tag.IndexOf(' '));
+                    string[] tempArray = tag.Substring(tag.IndexOf('>') + 1).Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
                     TagDict.Add(tempKey, tempArray.ToList());
                 }
             }
@@ -55,7 +73,7 @@ namespace TagTree
 
         public static TreeNode<T> treeBuilder<T>(Dictionary<T, List<T>> inputDict, T root)   //uses root and dict to create tree structure 
         {
-            TreeNode<T> tree = new TreeNode<T>  //creates first node
+            TreeNode<T> tree = new TreeNode<T>  //creates first node from root
             {
                 Data = root,
             };
@@ -63,7 +81,7 @@ namespace TagTree
             tree.Children = getChildNodes(inputDict, tree);   //looks for children of our first node
 
 
-            
+
             return tree;
         }
 
@@ -88,7 +106,7 @@ namespace TagTree
 
                     if (newNode.Children.Count == 0)  //converts node to type string and adds it to the treeString variable
                     {
-                        treeString += (NodeString(newNode) + "\n"); 
+                        treeString += (NodeString(newNode) + "\n");
                     }
 
                 }
@@ -121,7 +139,7 @@ namespace TagTree
 
         public static void Main(string[] args)  //main string in class
         {
-            string inFile = System.IO.File.ReadAllText(@"./input.txt");   //gets input
+            string inFile = getString();    //gets input
             string root = findRoot(inFile);  //finds root
             Dictionary<String, List<string>> TagDict = findTagDict(inFile);  //finds dict of parents and children
             treeBuilder(TagDict, root);  //uses root and dict to create tree structure
